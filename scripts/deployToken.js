@@ -1,11 +1,14 @@
 const hre = require('hardhat');
+const { ethers } = hre;
 
 async function deployToken() {
   await hre.run('compile');
 
+  const initialSupply = ethers.utils.parseEther('1000000');
+
   // We get the contract to deploy
   const CustomToken = await hre.ethers.getContractFactory('CustomToken');
-  const token = await CustomToken.deploy();
+  const token = await CustomToken.deploy(initialSupply);
 
   await token.deployed();
 

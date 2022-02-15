@@ -19,6 +19,18 @@ task('deployToken', 'Deploys token on a provided network').setAction(
   },
 );
 
+task('deployNFT', 'Deploys NFT token on a provided network').setAction(
+  async (taskArguments, hre, runSuper) => {
+    const deployNFT = require('./scripts/deployNFT');
+    await deployNFT(taskArguments);
+  },
+);
+
+task('interact', 'Interact with Contract').setAction(async (taskArguments, hre, runSuper) => {
+  const interactContract = require('./scripts/interactContract');
+  await interactContract(taskArguments);
+});
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 

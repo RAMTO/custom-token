@@ -53,7 +53,7 @@ npx hardhat deployToken --network rinkeby
 Verify the token:
 
 ```
-npx hardhat verify --contract "contracts/CustomToken.sol:CustomToken"  --network rinkeby "<DEPLOYED_TOKEN_ADDRESS>"
+npx hardhat verify --contract "contracts/CustomToken.sol:CustomToken" --network rinkeby "<DEPLOYED_TOKEN_ADDRESS>"
 ```
 
 ## 🤞 More instructions comming soon...

@@ -2,12 +2,16 @@ const hre = require('hardhat');
 
 async function deploy() {
   // We get the contract to deploy
-  const Contract = await hre.ethers.getContractFactory('Marketplace');
-  const contract = await Contract.deploy();
+  const LMCFactory = await hre.ethers.getContractFactory('LiquidityMiningCampaignFactory');
+  const PercentageCalculator = await hre.ethers.getContractFactory('PercentageCalculator');
 
-  await contract.deployed();
+  const percentageCalculator = await PercentageCalculator.deploy();
+  await percentageCalculator.deployed();
+  console.log('percentageCalculator deployed to:', percentageCalculator.address);
 
-  console.log('Contract deployed to:', contract.address);
+  const LMCFactoryContract = await LMCFactory.deploy();
+  await LMCFactoryContract.deployed();
+  console.log('LMCFactoryContract deployed to:', LMCFactoryContract.address);
 }
 
 deploy()

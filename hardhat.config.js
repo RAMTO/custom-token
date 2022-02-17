@@ -1,5 +1,6 @@
 require('@nomiclabs/hardhat-waffle');
 require('@nomiclabs/hardhat-etherscan');
+require('hardhat-contract-sizer');
 require('dotenv').config();
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -38,11 +39,11 @@ task('interact', 'Interact with Contract').setAction(async (taskArguments, hre, 
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: '0.8.4',
+  solidity: '0.6.12',
   settings: {
     optimizer: {
       enabled: true,
-      runs: 200,
+      runs: 10,
     },
   },
   networks: {
@@ -50,8 +51,18 @@ module.exports = {
       url: process.env.INFURA_URL,
       accounts: [process.env.WALLET_PRIVATE_KEY],
     },
+    volta: {
+      url: 'https://volta-rpc.energyweb.org',
+      accounts: [process.env.WALLET_PRIVATE_KEY],
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
+  },
+  contractSizer: {
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true,
+    strict: true,
   },
 };

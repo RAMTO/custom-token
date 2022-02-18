@@ -32,6 +32,17 @@ contract Marketplace {
     address nftAddress;
   }
 
+  struct Listing {
+    string name;
+    string description;
+    uint256 price;
+    uint256 collectionId; // Maybe mapping here?
+    uint256 status; // Maybe mapping here?
+    uint256 bid;
+    address payable owner; // Maybe mapping here?
+    address nftAddress;
+  }
+
   uint256[] public collectionsIds;
   uint256[] public listingsIds;
 
@@ -124,6 +135,62 @@ contract Marketplace {
     payable(msg.sender).transfer(msg.value);
 
     // Pay fee
+
+    Listings[listingId].owner = payable(msg.sender); //Why payable here?
+    Listings[listingId].status = 0;
+  }
+
+  function getCollectionLength() external view returns (uint256) {
+    return collectionsIds.length;
+  }
+
+  function createListing(
+    string calldata name,
+    string calldata description,
+    uint256 price,
+    uint256 collectionId,
+    address nftAddress
+  ) public payable {
+    _listingId.increment(); //Why increment here?
+
+    // Check for price
+
+    uint256 listingId = _listingId.current();
+
+    listingsIds.push(listingId);
+
+    Listings[listingId] = Listing(
+      name,
+      description,
+      price,
+      collectionId,
+      1,
+      0,
+      payable(msg.sender),
+      nftAddress
+    );
+  }
+
+  function getListingLength() external view returns (uint256) {
+    return listingsIds.length;
+  }
+
+  function setListingStatus(uint256 listingId, uint256 newStatus) external {
+    // Check for only ownership
+
+    Listings[listingId].status = newStatus;
+  }
+
+  function buyListing(uint256 listingId) public payable {
+    // nonReentrant
+
+    // Check for ownership
+
+    // Check for price
+
+    // Transfer NFT
+
+    payable(msg.sender).transfer(msg.value);
 
     Listings[listingId].owner = payable(msg.sender); //Why payable here?
     Listings[listingId].status = 0;

@@ -155,6 +155,10 @@ contract Marketplace {
 
     // Check for price
 
+    // Mint NFT
+
+    _listingId.increment();
+
     uint256 listingId = _listingId.current();
 
     listingsIds.push(listingId);
@@ -175,10 +179,15 @@ contract Marketplace {
     return listingsIds.length;
   }
 
-  function setListingStatus(uint256 listingId, uint256 newStatus) external {
+  function setListingStatus(
+    uint256 listingId,
+    uint256 newStatus,
+    uint256 price
+  ) external {
     // Check for only ownership
 
     Listings[listingId].status = newStatus;
+    Listings[listingId].price = price;
   }
 
   function buyListing(uint256 listingId) public payable {
@@ -191,6 +200,8 @@ contract Marketplace {
     // Transfer NFT
 
     payable(msg.sender).transfer(msg.value);
+
+    // Pay fee
 
     Listings[listingId].owner = payable(msg.sender); //Why payable here?
     Listings[listingId].status = 0;

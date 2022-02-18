@@ -1,0 +1,40 @@
+@import '_variables.scss';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 64px;
+  background-color: $bg-color-main;
+  color: $color-main;
+}
+
+.card {
+  background-color: $bg-color-containers;
+}
+
+.cursor-pointer {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  white-space: nowrap;
+}
+
+.list-item {
+  border: 1px solid rgb(37, 34, 34);
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color: #000000, $alpha: 1);
+  }
+}

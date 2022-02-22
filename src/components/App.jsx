@@ -3,12 +3,7 @@ import { ethers } from 'ethers';
 import Web3Modal, { setLocal } from 'web3modal';
 import '../styles/styles.scss';
 
-/*eslint no-unused-vars: "off"*/
-import Counter from './examples/Counter';
-import Input from './examples/Input';
-import SingleObject from './examples/SingleObject';
-import TodoList from './examples/TodoList';
-import MultipleObjects from './examples/MultipleObjects';
+import Header from './Header';
 
 const marketplaceABI = require('../artifacts/contracts/Marketplace.sol/Marketplace.json');
 
@@ -82,17 +77,6 @@ const App = () => {
     provider && userData && initContract();
   }, [provider, userData]);
 
-  const renderUserData = () => (
-    <div>
-      <p>
-        <span className="fw-bold">Address: </span> <span>{userData.userAdress}</span>
-      </p>
-      <p>
-        <span className="fw-bold">Ballance: </span> <span>{userData.userBalance} ETH</span>
-      </p>
-    </div>
-  );
-
   const renderContractData = () => {
     console.log('contractData', contractData);
   };
@@ -118,14 +102,11 @@ const App = () => {
 
   return (
     <div>
-      <h1>React Basics Course 🔥</h1>
-      <p>by Martin Dobrev</p>
-
-      <hr />
-
-      <div className="p-3">{provider ? renderUserData() : 'Connecting wallet...'}</div>
-      <div className="p-3">{contract ? renderContractData() : 'Fetching contract data...'}</div>
-      <div className="p-3">{contract ? renderContractForm() : 'Fetching contract data...'}</div>
+      <Header />
+      <div className="p-5">
+        <div className="p-3">{contract ? renderContractData() : 'Fetching contract data...'}</div>
+        <div className="p-3">{contract ? renderContractForm() : 'Fetching contract data...'}</div>
+      </div>
     </div>
   );
 };

@@ -7,6 +7,8 @@ contract EtherWallet {
   event Deposit(uint256 amount, address sender);
   event Withdraw(uint256 amount);
 
+  mapping(address => uint256) public userBalances;
+
   constructor() {
     owner = payable(msg.sender);
   }
@@ -18,6 +20,7 @@ contract EtherWallet {
 
   receive() external payable {
     emit Deposit(msg.value, msg.sender);
+    userBalances[msg.sender] = userBalances[msg.sender] + msg.value;
   }
 
   function withdraw(uint256 _amount) external onlyOwner {

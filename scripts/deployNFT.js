@@ -12,9 +12,9 @@ async function deployNFT() {
 
   await token.deployed();
 
-  const tx = await token.mintItem(addressToMint, URILink);
+  // const tx = await token.mintItem(addressToMint, URILink);
 
-  await tx.wait();
+  // await tx.wait();
 
   console.log('Token deployed to:', token.address);
 }

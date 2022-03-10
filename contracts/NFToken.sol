@@ -10,15 +10,42 @@ contract NFToken is ERC721URIStorage {
 
   Counters.Counter private _tokenIds;
 
+  enum Status {
+    Idle,
+    ForSale
+  }
+
+  struct MarketItemData {
+    Status status;
+    uint256 price;
+    uint256 collectionId;
+  }
+
+  mapping(uint256 => MarketItemData) public marketItemsData;
+
+  uint256[] marketItemsIds;
+
   constructor() ERC721('NFToken', 'NFT') {}
 
-  function mintItem(address player, string memory tokenURI) public returns (uint256) {
+  function mintItem(
+    address _player,
+    string memory _tokenURI,
+    uint256 _collectionId
+  ) public returns (uint256) {
     _tokenIds.increment();
 
     uint256 newItemId = _tokenIds.current();
-    _mint(player, newItemId);
-    _setTokenURI(newItemId, tokenURI);
+    _mint(_player, newItemId);
+    _setTokenURI(newItemId, _tokenURI);
+
+    marketItemsIds.push(newItemId);
+    marketItemsData[newItemId] = MarketItemData(Status.Idle, 0, _collectionId);
 
     return newItemId;
+  }
+
+  function setPrice(uint256 _price, uint256 _itemId) external {
+    marketItemsData[_itemId].price = _price;
+    marketItemsData[_itemId].status = Status.ForSale;
   }
 }

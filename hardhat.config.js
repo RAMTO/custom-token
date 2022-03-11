@@ -26,6 +26,14 @@ task('deployNFT', 'Deploys NFT token on a provided network').setAction(
   },
 );
 
+task('deployContract', 'Deploys sample contract on a provided network')
+  .addOptionalParam('contractName', 'Name of the contract', 'SampleContract')
+  .setAction(async (taskArguments, hre, runSuper) => {
+    const { contractName } = taskArguments;
+    const deployContract = require('./scripts/deployContract');
+    await deployContract(contractName);
+  });
+
 task('interact', 'Interact with Contract').setAction(async (taskArguments, hre, runSuper) => {
   const interactContract = require('./scripts/interactContract');
   await interactContract(taskArguments);
@@ -47,7 +55,7 @@ module.exports = {
   },
   networks: {
     rinkeby: {
-      url: process.env.INFURA_URL,
+      url: process.env.PROVIDER_URL,
       accounts: [process.env.WALLET_PRIVATE_KEY],
     },
   },
